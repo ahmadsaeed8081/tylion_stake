@@ -1,0 +1,102 @@
+// Header
+.header-camp {
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 0px;
+  // position: sticky;
+  background: #231e1e;
+  .wrap {
+    gap: 20px;
+    .left {
+      .logo-img {
+        @include media("<=tablet") {
+          display: none;
+        }
+        .logo {
+          height: 50px;
+        }
+      }
+      .menu-icon {
+        display: none;
+        @include media("<=tablet") {
+          display: flex;
+        }
+      }
+    }
+    .center {
+      flex: 1;
+      @include media("<=tablet") {
+        display: none;
+      }
+      .menu-list {
+        margin-left: 60px;
+        gap: 30px;
+        .menu-item {
+          color: #fff;
+          text-align: center;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          cursor: pointer;
+          @include anim;
+          &:hover,
+          &:nth-child(2) {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(90deg, #29d9aa, #7003fc);
+          }
+        }
+        .sub-menu {
+          position: absolute;
+          top: 20px;
+          right: 0;
+          width: 200px;
+          background: #000000;
+          border-radius: 8px;
+          padding: 10px;
+          .sub-menu-item {
+            width: 100%;
+            padding: 6px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            color: #fff;
+            cursor: pointer;
+            &:last-child {
+              margin-bottom: 0;
+            }
+            &:hover {
+              -webkit-background-clip: text;
+              color: transparent;
+              background-image: linear-gradient(
+                90deg,
+                #29d9aa 0%,
+                #7003fc 100%
+              );
+            }
+          }
+        }
+      }
+    }
+    .right {
+      @include media("<=tablet") {
+        flex: 1;
+      }
+      .action {
+        gap: 20px;
+        .btn-connect {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 18.75px;
+          padding: 8px 20px;
+          border-radius: 6px;
+        }
+      }
+    }
+  }
+}

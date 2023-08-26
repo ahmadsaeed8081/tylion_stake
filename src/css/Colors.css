@@ -1,0 +1,20 @@
+.color {
+  color: linear-gradient(90deg, #29d9aa 0%, #7003fc 100%);
+}
+
+.white {
+  color: #ffffff;
+}
+
+.red {
+  color: #d61810;
+}
+
+.yellow {
+  color: #f2b239;
+}
+
+.green {
+  color: #10a310;
+}
+/*# sourceMappingURL=Colors.css.map */

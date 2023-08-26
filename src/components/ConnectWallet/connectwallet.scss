@@ -1,0 +1,159 @@
+.connect-wallet {
+  width: 500px;
+  min-height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 10px 13px -7px #000, 5px 5px 15px 5px transparent;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 10px;
+  @include media("<=phoneH") {
+    width: 300px;
+    height: 100%;
+    padding: 20px;
+  }
+  .wallet-wrapper {
+    width: 100%;
+    .card-hdr {
+      padding: 20px 0;
+      .tag {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 34px;
+        line-height: 19px;
+        color: #ffffff;
+        @include media("<=phoneH") {
+          font-size: 24px;
+        }
+      }
+    }
+    .meta {
+      padding: 20px 0px;
+      .item {
+        background: #252837;
+        border-radius: 6px;
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        @include anim;
+        &:hover {
+          background: $themeColor;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+        .img {
+          height: 40px;
+          width: 40px;
+          background: #fff;
+          padding: 4px;
+          border-radius: 50%;
+          img {
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+          }
+        }
+        .info {
+          margin-left: 14px;
+          .name {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 17px;
+            color: #ffffff;
+            margin-bottom: 6px;
+          }
+          .desc {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 17px;
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+}
+
+.connect-wallet-new {
+  width: 500px;
+  min-height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 10px 13px -7px #000, 5px 5px 15px 5px transparent;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #252837;
+  @include media("<=phoneH") {
+    width: 300px;
+    height: 100%;
+    padding: 20px;
+  }
+  .wallet-wrapper {
+    width: 100%;
+    .card-hdr {
+      padding: 20px 0;
+      .tag {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 19px;
+        color: #ffffff;
+        margin-bottom: 15px;
+        @include media("<=phoneH") {
+          font-size: 18px;
+        }
+      }
+      .hdr-desc {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #ffffff;
+        @include media("<=phoneH") {
+          font-size: 12px;
+        }
+      }
+    }
+    .meta {
+      padding: 20px 0px;
+      .item {
+        margin-bottom: 12px;
+        &:last-child{
+          margin-bottom: 0;
+        }
+        .lbl {
+          color: #fff;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 30px;
+        }
+        .val {
+          color: #fff;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 30px; 
+        }
+      }
+    }
+    .action{
+      margin-top: 30px;
+      .btn{
+        width: 100%;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 20px;
+        font-weight: 500;
+      }
+    }
+  }
+}
