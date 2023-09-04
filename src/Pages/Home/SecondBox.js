@@ -67,12 +67,19 @@ const SecondBox = ({
   const [hideTime, set_hideTime] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const [toggleOn, setToggleOn] = useState(true);
 
   const [expend, setExpend] = useState(false);
   const [totalReward, set_totalReward] = useState(0);
   const [Total_withdraw, set_Total_withdraw] = useState(0);
 
   const [stakeAmount, setStakedAmount] = useState(0);
+  const [apy, set_apy] = useState("");
+  const [minimum_investment, set_min_inv] = useState("");
+
+  const [maximum_investment, set_max_inv] = useState("");
+
+
   const [curr_time, set_currTime] = useState(0);
   const [selectedAmount_forReward, setSelectedAmount_forReward] =
     useState(null);
@@ -87,7 +94,7 @@ const SecondBox = ({
 
   const { address, isConnecting, isDisconnected } = useAccount();
   let count = 0;
-  const networkId = 369;
+  const networkId = 137;
 
   const {
     data: stakeResult,
@@ -98,7 +105,7 @@ const SecondBox = ({
     address: stake2_address,
     abi: stake2_3_abi,
     functionName: "Stake",
-    args: [stakeAmount * 10 ** 18, selectedAPR.value],
+    args: [stakeAmount * 10 ** 18, toggleOn],
     onSuccess(data) {
       test();
       console.log("Success", data);
@@ -116,6 +123,13 @@ const SecondBox = ({
     address: stake2_address,
     abi: stake2_3_abi,
     functionName: "unStake",
+    args: [choosed_Unstake_inv,0],
+  });
+
+  const { config: unstakeReqConfig } = usePrepareContractWrite({
+    address: stake2_address,
+    abi: stake2_3_abi,
+    functionName: "unStake_Request",
     args: [choosed_Unstake_inv],
   });
 
@@ -138,6 +152,15 @@ const SecondBox = ({
     isSuccess: isSuccess_unstake,
     write: unstake,
   } = useContractWrite(unstakeConfig);
+
+
+  const {
+    data: data__unstake_req,
+    isLoading: isLoading_unstake_req,
+    isSuccess: isSuccess_unstake_req,
+    write: unstake_req,
+  } = useContractWrite(unstakeReqConfig);
+
 
   const {
     data: stakeResult_withdrawReward,
@@ -179,6 +202,13 @@ const SecondBox = ({
     },
   });
 
+  const waitForTransaction5 = useWaitForTransaction({
+    hash: data__unstake_req?.hash,
+    onSuccess(data) {
+      test?.();
+      console.log("Success2", data);
+    },
+  });
   useEffect(() => {
     if (count == 0 && address != undefined) {
       console.log("hello sec box");
@@ -232,6 +262,9 @@ const SecondBox = ({
     ],
   });
 
+
+
+
   const { switchNetwork: stake_switch } = useSwitchNetwork({
     chainId: networkId,
     // throwForSwitchChainNotSupported: true,
@@ -244,6 +277,13 @@ const SecondBox = ({
     // throwForSwitchChainNotSupported: true,
     onSuccess() {
       unstake?.();
+    },
+  });
+  const { switchNetwork: unstake_req_switch } = useSwitchNetwork({
+    chainId: networkId,
+    // throwForSwitchChainNotSupported: true,
+    onSuccess() {
+      unstake_req?.();
     },
   });
   const {
@@ -270,7 +310,7 @@ const SecondBox = ({
 
   function Convert_To_eth(val) {
     const web3 = new Web3(
-      new Web3.providers.HttpProvider("https://pulsechain.publicnode.com")
+      new Web3.providers.HttpProvider("https://polygon-bor.publicnode.com	")
     );
     val = web3.utils.fromWei(val.toString(), "ether");
     return val;
@@ -278,12 +318,18 @@ const SecondBox = ({
 
   async function test() {
     const web3 = new Web3(
-      new Web3.providers.HttpProvider("https://pulsechain.publicnode.com")
+      new Web3.providers.HttpProvider("https://polygon-bor.publicnode.com	")
     );
 
     const balance = await web3.eth.getBalance(address);
     const contract = new web3.eth.Contract(stake2_3_abi, stake2_address);
     let curr_time = await contract.methods.get_currTime().call();
+    let apy = await contract.methods.get_apy().call();
+    let minimum_investment = await contract.methods.minimum_investment().call();
+    let maximum_investment = await contract.methods.maximum_investment().call();
+set_max_inv(Convert_To_eth(maximum_investment))
+set_min_inv(Convert_To_eth(minimum_investment))
+    set_apy(apy);
     set_currTime(curr_time);
 
     let totalReward = await contract.methods
@@ -300,7 +346,7 @@ const SecondBox = ({
     let All_investments_ForReward = await contract.methods
       .getAll_investments_ForReward()
       .call({ from: address });
-
+console.log(" object rew "+All_investments_ForReward);
     set_investmentList(allInvestments);
     setSelectedAmount(allInvestments[0]);
     set_All_investments_ForReward(All_investments_ForReward);
@@ -362,6 +408,34 @@ const SecondBox = ({
     // console.log(data__unstake);
   }
 
+
+  function unstaking_req() {
+    if (isDisconnected) {
+      alert("kindly connect your wallet ");
+      return;
+    }
+    console.log("object unstake " + choosed_Unstake_inv);
+    // if(stakeAmount==0 )
+    // {
+    //   alert("kindly write amount to stake ");
+    //   return;
+    // }
+
+    // if(Number(data[10].result) < Number(fee))
+    // {
+    //   alert("You dont have enough balance");
+    //   return;
+    // }
+    if (chain.id != networkId) {
+      unstake_req_switch?.();
+    } else {
+      unstake_req?.();
+    }
+    // console.log(data__unstake);
+  }
+
+
+
   function ClaimReward() {
     if (isDisconnected) {
       alert("kindly connect your wallet ");
@@ -386,6 +460,8 @@ const SecondBox = ({
     }
   }
 
+
+  
   // setInterval( test, 60000);
 
   console.log("second box");
@@ -417,7 +493,7 @@ const SecondBox = ({
             <div className="lbl-side"></div>
             <div className="val-side">
               <a
-                href="https://app.pulsex.com/swap?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F &outputCurrency=0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+                href=""
                 target="_blank"
                 className="sub-menu-item"
                 style={{ color: "#2498A3" }}
@@ -431,7 +507,7 @@ const SecondBox = ({
             <div className="lbl-side"></div>
             <div className="val-side">
               <a
-                href={"https://scan.pulsechain.com/address/" + stake2_address}
+                href={"https://mumbai.polygonscan.com/address/" + stake2_address}
                 target="_blank"
                 className="sub-menu-item"
                 style={{ color: "#2498A3" }}
@@ -480,18 +556,18 @@ const SecondBox = ({
           <div className="body-meta flex flex-col justify-between h-full">
             <div className="flex flex-col">
               <div className="info-list flex flex-col">
-                <div className="info-item flex items-center justify-between">
+                {/* <div className="info-item flex items-center justify-between">
                   <h1 className="item-lbl text-white">Lock-up Period:</h1>
                   <h1 className="item-lbl text-white">1 Year</h1>
-                </div>
+                </div> */}
                 <div className="info-item flex items-center justify-between">
                   <h1 className="item-lbl text-white">APY:</h1>
-                  <h1 className="item-lbl text-white">25%</h1>
+                  <h1 className="item-lbl text-white">{apy}%</h1>
                 </div>
                 <div className="info-item flex items-center justify-between">
                   <h1 className="item-lbl text-white">Auto Compounding</h1>
                   <h1 className="item-lbl text-white">
-                    <ToggleButton />
+                    <ToggleButton setToggleOn={setToggleOn} toggleOn={toggleOn}/>
                   </h1>
                 </div>
               </div>
@@ -499,9 +575,9 @@ const SecondBox = ({
               <div className="input-form flex flex-col">
                 <div className="input-field flex flex-col">
                   <div className="field-hdr flex items-center justify-between">
-                    <h1 className="f-tag">Amount: (Min $10 - Max $50)</h1>
+                    <h1 className="f-tag">Amount: (Min {minimum_investment} - Max {maximum_investment})</h1>
                     <h1 className="f-tag">
-                      Balance: <span className="font-semibold">100 Tyon</span>
+                      Balance: <span className="font-semibold">{  data ? (Number(data[8].result) / 10 ** 18) : "0" }</span>
                     </h1>
                   </div>
                   <div className="field-i-box flex items-center">
@@ -511,7 +587,8 @@ const SecondBox = ({
                       placeholder="Amount"
                       min={0}
                       value={stakeAmount}
-                      max={data ? Number(data[8].result) / 10 ** 18 : 0}
+
+                      max={maximum_investment ? Number(maximum_investment) : 0}
                       onChange={(e) => setStakedAmount(e.target.value)}
                     />
                     <div className="ib-right flex items-center">
@@ -519,7 +596,7 @@ const SecondBox = ({
                       <button
                         className="ib-btn button"
                         onClick={(e) =>
-                          setStakedAmount(Number(data[8].result) / 10 ** 18)
+                          setStakedAmount(maximum_investment ? Number(maximum_investment) : 0)
                         }
                       >
                         Max
@@ -628,13 +705,38 @@ const SecondBox = ({
                       </div>
                     </div>
                   </div>
-                  <Timer
-                    time={selectedAmount ? Number(selectedAmount[1]) : 0}
-                  />
+                  {selectedAmount? (selectedAmount[7] ?
+                   (
+                    <div className="unit-name flex aic font w-full s14 b4 justify-between">
+                    <span className="unit-eng flex aic font s14 b4">
+                      request remaining time:
+                    </span>
+                    <span className="unit-eng flex aic font s14 b4">
+                    <Timer time={selectedAmount ? Number(selectedAmount[9]) : 0}/>          
+                    </span>
+                    </div>
+
+
+                  ):(null)):null}
+                 
                 </div>
               </div>
             </div>
-            {selectedAmount ? (
+            {selectedAmount? (selectedAmount[7] ?(
+              <button className="btn-stack button" onClick={(e) => unstaking() }>Immediate Unstake</button>
+
+
+                  ):(
+
+                    <button className="btn-stack button" onClick={(e) => setOpen(true) }>Unstake</button>
+
+                  )):(
+                    <button className="btn-stack button" >Unstake</button>
+
+                  )}
+
+
+            {/* {selectedAmount ? (
               <button
                 className="btn-stack button"
                 disabled={isLoading_unstake}
@@ -653,7 +755,7 @@ const SecondBox = ({
               </button>
             ) : (
               <button className="btn-stack button">Unstake</button>
-            )}
+            )} */}
           </div>
           <BodyBottom />
         </div>
@@ -788,7 +890,7 @@ const SecondBox = ({
         </div>
       ) : null}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <ConfirmationPopup setOpen={setOpen} unstaking={unstaking} />
+        <ConfirmationPopup setOpen={setOpen} unstaking={unstaking} unstaking_req={unstaking_req} />
       </Modal>
     </div>
   );

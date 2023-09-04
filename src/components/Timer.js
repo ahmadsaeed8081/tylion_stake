@@ -55,20 +55,20 @@ const Timer = ({time}) => {
       <div className="timer-box">
         <div className="time-item flex">
           <div className="_vale">{countdown.days}</div>
-          <div className="_tag">Days</div>
+          <div className="_tag">D</div>
         </div>
         <div className="time-item flex">
           <div className="_vale">{countdown.hours}</div>
-          <div className="_tag">Hours</div>
+          <div className="_tag">H</div>
         </div>
 
         <div className="time-item flex">
           <div className="_vale">{countdown.minutes}</div>
-          <div className="_tag">Minutes</div>
+          <div className="_tag">M</div>
         </div>
         <div className="time-item flex">
           <div className="_vale">{countdown.seconds}</div>
-          <div className="_tag">Seconds</div>
+          <div className="_tag">S</div>
         </div>
       </div>
     </div>

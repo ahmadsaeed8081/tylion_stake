@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-const Toggle = () => {
-  const [toggleOn, setToggleOn] = useState(true);
+const Toggle = ({toggleOn, setToggleOn}) => {
+  // const [toggleOn, setToggleOn] = useState(true);
+  console.log("its toggle "+toggleOn);
   return (
     <div className="toggle-btn flex aic jc">
       <button

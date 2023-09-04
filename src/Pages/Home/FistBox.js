@@ -88,7 +88,7 @@ const FistBox = ({
 
   const { address, isConnecting, isDisconnected } = useAccount();
   let count = 0;
-  const networkId = 369;
+  const networkId = 137;
 
   const {
     data: stakeResult,
@@ -271,7 +271,7 @@ const FistBox = ({
 
   function Convert_To_eth(val) {
     const web3 = new Web3(
-      new Web3.providers.HttpProvider("https://pulsechain.publicnode.com")
+      new Web3.providers.HttpProvider("https://polygon-bor.publicnode.com	")
     );
     val = web3.utils.fromWei(val.toString(), "ether");
     return val;
@@ -279,7 +279,7 @@ const FistBox = ({
 
   async function test() {
     const web3 = new Web3(
-      new Web3.providers.HttpProvider("https://pulsechain.publicnode.com")
+      new Web3.providers.HttpProvider("https://polygon-bor.publicnode.com	")
     );
 
     const balance = await web3.eth.getBalance(address);

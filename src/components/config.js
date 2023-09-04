@@ -1,16 +1,10 @@
-export const stake1_address="0x8aac9d23f536e0aF33f70444C07659e65e1e0388";
-export const stake2_address="0x9Bfaf36a0947CED57cE788AefaD5d41ED7d1Fd2E";
-export const stake3_address="0x61cD011CB67E20ba66a1ccb68Da1F0980361A702";
-export const stake4_address="0x2f50561B5CE0bE4c7DDb274F1D5176B8659506bB"; //WBTC
-export const stake5_address="0xd1E97df16db4B69D4e7886Cd24A4C0A0684e3B01"; //PLSX
-export const stake6_address="0xB69D59b9B7e52E69A220b458a69cE6C6aea56Aa4"; //PLUTUS
+export const stake1_address="0xBD4F36f2B4237B9F6fbDA84490B891578e8EEb82";
+export const stake2_address="0xBD4F36f2B4237B9F6fbDA84490B891578e8EEb82";
 
-export  const Stake1_token_Address="0x95384953e541Ab1b7Fb11338Fc034B80b4A8fb81";
-export  const Stake2_token_Address="0x46E27Ea3A035FfC9e6d6D56702CE3D208FF1e58c";
-export  const Stake3_token_Address="0xEB61e672efc82b0A92068683746113c8eD0f8DcE";
-export  const Stake4_token_Address="0x6414662e9cAa9C65C9b062cf921F4f3BF0f7acCd";
-export  const Stake5_token_Address="0x669feEA666113548b80358B9445DbFA73455aBcd";
-export  const Stake6_token_Address="0xfF9405B3ADC43277b7Eebb51aa6585f51Bc87885";
+
+export  const Stake1_token_Address="0x51a61EC45a849360580Daaa52b1a30D699D1BB32";
+export  const Stake2_token_Address="0x51a61EC45a849360580Daaa52b1a30D699D1BB32";
+
 
 
 export const stake1_abi=[
@@ -606,96 +600,9 @@ export const stake1_abi=[
 ];
 export const stake2_3_abi=[
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_investedamount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "choose_val",
-				"type": "uint256"
-			}
-		],
-		"name": "Stake",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "num",
-				"type": "uint256"
-			}
-		],
-		"name": "unStake",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "token",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "withdrawFunds",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "withdrawReward",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -717,72 +624,66 @@ export const stake2_3_abi=[
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "Apy",
+		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "details",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Apy_Timeframe",
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "timeframe",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Lockup_period",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_investedamount",
 				"type": "uint256"
 			},
 			{
-				"internalType": "uint256",
-				"name": "APR",
-				"type": "uint256"
+				"internalType": "bool",
+				"name": "_autoCompounding",
+				"type": "bool"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "get_currTime",
+		"name": "Stake",
 		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "get_TotalReward",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "num",
-				"type": "uint256"
-			}
-		],
-		"name": "get_withdrawnTime",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -827,17 +728,27 @@ export const stake2_3_abi=[
 						"type": "uint256"
 					},
 					{
+						"internalType": "bool",
+						"name": "unstake_req",
+						"type": "bool"
+					},
+					{
 						"internalType": "uint256",
-						"name": "apr",
+						"name": "unstake_req_time",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "timeframe",
+						"name": "unstake_reqEnd_time",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "autoCompounding",
+						"type": "bool"
 					}
 				],
-				"internalType": "struct plutus_wPLS_WBTC_Pool.allInvestments[]",
+				"internalType": "struct Staking.allInvestments[]",
 				"name": "Invested",
 				"type": "tuple[]"
 			}
@@ -887,17 +798,27 @@ export const stake2_3_abi=[
 						"type": "uint256"
 					},
 					{
+						"internalType": "bool",
+						"name": "unstake_req",
+						"type": "bool"
+					},
+					{
 						"internalType": "uint256",
-						"name": "apr",
+						"name": "unstake_req_time",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "timeframe",
+						"name": "unstake_reqEnd_time",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "autoCompounding",
+						"type": "bool"
 					}
 				],
-				"internalType": "struct plutus_wPLS_WBTC_Pool.allInvestments[]",
+				"internalType": "struct Staking.allInvestments[]",
 				"name": "Invested",
 				"type": "tuple[]"
 			}
@@ -940,6 +861,120 @@ export const stake2_3_abi=[
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "get_Apy",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "get_ReqEndTime",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_TotalReward",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_apy",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_apy_temp",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_currTime",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "get_withdrawnTime",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
@@ -951,6 +986,71 @@ export const stake2_3_abi=[
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "launch_time",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "maximum_investment",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "minimum_Apy",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "minimum_investment",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "minimum_withdraw_reward_limit",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -971,7 +1071,20 @@ export const stake2_3_abi=[
 	},
 	{
 		"inputs": [],
-		"name": "per_day_divider",
+		"name": "penality",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "total_reward_to_distribute",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -1019,6 +1132,166 @@ export const stake2_3_abi=[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "unStake",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "num",
+				"type": "uint256"
+			}
+		],
+		"name": "unStake_Request",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_Apy_Timeframe",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_Lockup_period",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_distributed_reward",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_max_investment",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_minimum_Apy",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_minimum_investment",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_penality",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "update_withdraw_limit",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1106,17 +1379,58 @@ export const stake2_3_abi=[
 				"type": "uint256"
 			},
 			{
+				"internalType": "bool",
+				"name": "unstake_req",
+				"type": "bool"
+			},
+			{
 				"internalType": "uint256",
-				"name": "apr",
+				"name": "unstake_req_time",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "timeframe",
+				"name": "unstake_reqEnd_time",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "autoCompounding",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "token",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdrawFunds",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawReward",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ];
