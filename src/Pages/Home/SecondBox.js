@@ -498,7 +498,7 @@ console.log(" object rew "+All_investments_ForReward);
                 className="sub-menu-item"
                 style={{ color: "#2498A3" }}
               >
-                Tyrion/Tyon
+                Tyrion/$TYON
               </a>
             </div>
           </div>
@@ -551,7 +551,7 @@ console.log(" object rew "+All_investments_ForReward);
           {boxNumb !== 2 && <div className="overlay" />}
           <div className="body-top flex items-center justify-between">
             <img src="/images/pls-wbtc.png" className="img" />
-            <h1 className="top-tag">Tyrion/Tyon</h1>
+            <h1 className="top-tag">Tyrion/$TYON</h1>
           </div>
           <div className="body-meta flex flex-col justify-between h-full">
             <div className="flex flex-col">
@@ -592,7 +592,7 @@ console.log(" object rew "+All_investments_ForReward);
                       onChange={(e) => setStakedAmount(e.target.value)}
                     />
                     <div className="ib-right flex items-center">
-                      <h1 className="ib-txt">Tyon</h1>
+                      <h1 className="ib-txt">$TYON</h1>
                       <button
                         className="ib-btn button"
                         onClick={(e) =>
@@ -636,13 +636,13 @@ console.log(" object rew "+All_investments_ForReward);
           {boxNumb !== 2 && <div className="overlay" />}
           <div className="body-top flex items-center justify-between">
             <img src="/images/pls-wbtc.png" className="img" />
-            <h1 className="top-tag">Tyrion/Tyon</h1>
+            <h1 className="top-tag">Tyrion/$TYON</h1>
           </div>
           <div className="body-meta flex flex-col justify-between h-full">
             <div className="flex flex-col">
               <div className="info-list flex flex-col">
                 <div className="info-item flex items-center justify-between">
-                  <h1 className="item-lbl text-white">Penalty:</h1>
+                  <h1 className="item-lbl text-white">Penalty ($TYONs):</h1>
                   <h1 className="item-lbl text-red-600">10%</h1>
                 </div>
               </div>
@@ -667,8 +667,8 @@ console.log(" object rew "+All_investments_ForReward);
                               placeholder="Plano"
                             >
                               {selectedAmount
-                                ? selectedAmount[0] / 10 ** 18
-                                : "0"}
+                                ? selectedAmount[0] / 10 ** 18 
+                                : "0"} TYONs
                             </span>
                           </div>
                         </div>
@@ -694,7 +694,7 @@ console.log(" object rew "+All_investments_ForReward);
                           >
                             <div className="unit-name flex aic font w-full s14 b4 justify-between">
                               <span className="unit-eng flex aic font s14 b4">
-                                {Number(item[0]) / 10 ** 18}
+                                {Number(item[0]) / 10 ** 18} TYONs
                               </span>
                               <span className="unit-eng flex aic font s14 b4">
                                 {find_date(Number(item[2]))}
@@ -770,13 +770,13 @@ console.log(" object rew "+All_investments_ForReward);
           {boxNumb !== 2 && <div className="overlay" />}
           <div className="body-top flex items-center justify-between">
             <img src="/images/pls-wbtc.png" className="img" />
-            <h1 className="top-tag">Tyrion/Tyon </h1>
+            <h1 className="top-tag">Tyrion/$TYON </h1>
           </div>
           <div className="body-meta flex flex-col justify-between h-full">
             <div className="flex flex-col">
               <div className="info-list flex flex-col">
                 <div className="info-item flex items-center justify-between">
-                  <h1 className="item-lbl text-white">Total Earnings</h1>
+                  <h1 className="item-lbl text-white">Total Earnings ($TYONs)</h1>
                   <h1 className="item-lbl text-white">
                     {(Number(Total_withdraw) + Number(totalReward)) / 10 ** 18}
                   </h1>
@@ -810,7 +810,7 @@ console.log(" object rew "+All_investments_ForReward);
                             >
                               {selectedAmount_forReward
                                 ? selectedAmount_forReward[0] / 10 ** 18
-                                : "0"}
+                                : "0"} TYONs
                             </span>
                           </div>
                         </div>
@@ -835,7 +835,7 @@ console.log(" object rew "+All_investments_ForReward);
                           >
                             <div className="unit-name flex aic font w-full s14 b4 justify-between">
                               <span className="unit-eng flex aic font s14 b4">
-                                {Number(item[0]) / 10 ** 18}
+                                {Number(item[0]) / 10 ** 18} TYONs
                               </span>
                               <span className="unit-eng flex aic font s14 b4">
                                 {find_date(Number(item[2]))}

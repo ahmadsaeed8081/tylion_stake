@@ -449,7 +449,7 @@ const FistBox = ({
     <div className="grid-box flex flex-col relative">
       {stakeType === "fixed" ? (
         <div className="body-overlay h-full w-full flex items-center justify-center">
-          Coming Soon
+          Coming Soon with Higher APY Limits
         </div>
       ) : (
         ""

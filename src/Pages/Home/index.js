@@ -53,8 +53,8 @@ const Main = () => {
       <div className="lading-page bg-themeColor h-screen flex">
         <div className="wrap wrapWidth flex flex-col text-white">
           <div className="page-meta flex flex-col items-center">
-            <h1 className="slug">Staking</h1>
-            <p className="desc">Stake LP tokens and earn Incentive token</p>
+            <h1 className="slug">$TYON Staking</h1>
+            <p className="desc">Earn TYON tokens by Staking TYON tokens and multiply your holdings</p>
           </div>
           <div className="staking-type flex items-center justify-center">
             <button

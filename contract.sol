@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 interface Token {
     function transfer(address to, uint tokens) external returns (bool success);
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool) ;
-      function balanceOf(address account) external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
     function allowance(address owner, address spender) external view returns (uint256);
 
     }
@@ -13,24 +13,23 @@ contract Staking
     {
        
         address  public owner;
-        address Staking_token=0xfF9405B3ADC43277b7Eebb51aa6585f51Bc87885; //credit
-        address Reward_Token=0x8A36D4f99aa7E6a80c25Aa97291B83000EEdf646; // bel3
+        address Staking_token=0x51a61EC45a849360580Daaa52b1a30D699D1BB32; //credit
+        address Reward_Token=0x51a61EC45a849360580Daaa52b1a30D699D1BB32; // bel3
 
 
         mapping(address=>bool) public isUser;
 
         uint public totalusers;
-        uint public per_day_divider= 1 minutes;
-        uint public Lockup_period= 400 days;
+        uint public Apy_Timeframe= 1 minutes; //1 day
+        uint public Lockup_period= 400 minutes; //1 day
         uint public Apy= 25;
         uint public minimum_Apy= 3;
         uint public penality = 10; 
-        uint public minimum_investment=100;
-        uint public maximum_investment=100000;
+        uint public minimum_investment=100*10**18;
+        uint public maximum_investment=100000*10**18;
         uint public minimum_withdraw_reward_limit=10;
-        uint public Apy_Timeframe= 1 days;
     
-        uint public total_reward_to_distribute = 100000*10**18;
+        uint public total_reward_to_distribute = 100*10**18;
 
 
         uint public totalbusiness; 
@@ -44,11 +43,10 @@ contract Staking
             uint investmentNum;
             uint unstakeTime;
             bool unstake;
+            uint reward;
             bool unstake_req;
             uint unstake_req_time;
             uint unstake_reqEnd_time;
-
-            uint reward;
             bool autoCompounding;
 
         }
@@ -110,16 +108,12 @@ contract Staking
             user[msg.sender].investment[num].withdrawnTime=block.timestamp + Lockup_period ;  
             
             user[msg.sender].investment[num].investmentNum=num;
-            // user[msg.sender].investment[num].apr=details[choose_val].APR;
-            //  user[msg.sender].investment[num].timeframe=(details[choose_val].timeframe/per_day_divider) ;  
-
+ 
 
             user[msg.sender].totalInvestment+=_investedamount;
             user[msg.sender].noOfInvestment++;
             totalbusiness+=_investedamount;
 
-            // Token(Staking_token).transferFrom(msg.sender,Wbtc_add,fee20);
-            Token(Staking_token).transferFrom(msg.sender,owner,_investedamount);
 
             Token(Staking_token).transferFrom(msg.sender,address(this),_investedamount);
             user_investments[msg.sender][num] = user[msg.sender].investment[num];
@@ -128,7 +122,49 @@ contract Staking
             return true;
             
         }
+        function get_apy_temp() view public returns(uint,uint){ 
+            uint cal_apy=0;
+            uint depTime;
+            uint rew;
+            
+                // set flexible anf fixed apy
 
+                // depTime =block.timestamp - launch_time;
+
+               
+                // depTime=depTime/Apy_Timeframe; //1 day
+                // if(depTime>0)
+                // {
+                    for(uint j=0;j < 400;j++)
+                    {
+                        rew =  rew + ((((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) )/400);
+                    }
+
+
+                    if(rew <= total_reward_to_distribute)
+                    {
+                        cal_apy=Apy;
+                    
+                    }
+                    else
+                    {
+                       cal_apy= ( (total_reward_to_distribute/totalusers) * 100)/total_reward_to_distribute;
+
+                       if(cal_apy>Apy)
+                       {
+                           cal_apy=Apy;
+                       }
+                    }
+
+                // }
+
+            
+            
+
+            return (rew,cal_apy);
+
+
+        }
         function get_apy() view public returns(uint){ 
             uint cal_apy=0;
             uint depTime;
@@ -136,28 +172,35 @@ contract Staking
             
                 // set flexible anf fixed apy
 
-                depTime =block.timestamp - launch_time;
+                // depTime =block.timestamp - launch_time;
 
                
-                depTime=depTime/per_day_divider; //1 day
-                if(depTime>0)
-                {
-                    for(uint j=0;j<depTime;j++)
+                // depTime=depTime/Apy_Timeframe; //1 day
+                // if(depTime>0)
+                // {
+                    for(uint j=0;j < 400;j++)
                     {
-                        rew =   (((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) );
+                        rew =  rew + ( (((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) )/400);
                     }
+
 
                     if(rew <= total_reward_to_distribute)
                     {
                         cal_apy=Apy;
+                    
                     }
                     else
                     {
                        cal_apy= ( (total_reward_to_distribute/totalusers) / total_reward_to_distribute)*100;
+
+                       if(cal_apy>Apy)
+                       {
+                           cal_apy=Apy;
+                       }
                     }
 
-                }
-                
+                // }
+
             
             
 
@@ -192,14 +235,14 @@ contract Staking
                 {
                     depTime =user[msg.sender].investment[i].unstakeTime - user[msg.sender].investment[i].DepositTime;
                 }
-                depTime=depTime/per_day_divider; //1 day
+                depTime=depTime/Apy_Timeframe; //1 day
                 if(depTime>0)
                 {
                     if(user[msg.sender].investment[i].autoCompounding)
                     {
                         for(uint j=0;j<depTime;j++)
                         {
-                            rew =   ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/400);
+                            rew =  rew+ ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/400);
 
                         }
                         totalReward += rew;
@@ -244,14 +287,14 @@ contract Staking
                 {
                     depTime =user[msg.sender].investment[i].unstakeTime - user[msg.sender].investment[i].DepositTime;
                 }
-                depTime=depTime/per_day_divider; //1 day
+                depTime=depTime/Apy_Timeframe; //1 day
                 if(depTime>0)
                 {
                     if(user[msg.sender].investment[i].autoCompounding)
                     {
                         for(uint j=0;j<depTime;j++)
                         {
-                            rew =   ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/400);
+                            rew = rew+   ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/400);
 
                         }
                         totalReward += rew;
@@ -362,8 +405,8 @@ contract Staking
 
             for(uint i=0;i<num;i++)
             {
-               if( !user[msg.sender].investment[i].unstake ){
-
+               if( !user[msg.sender].investment[(num-1)-i].unstake )
+               {
                    Invested[currentIndex]=user[msg.sender].investment[(num-1)-i];
                     Invested[currentIndex].reward=getReward_perInv((num-1)-i);
 
