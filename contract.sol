@@ -21,14 +21,14 @@ contract Staking
 
         uint public totalusers;
         uint public Apy_Timeframe= 1 minutes; //1 day
-        uint public Lockup_period= 400 minutes; //1 day
+        uint public Lockup_period= 365 minutes; //1 day
         uint public Apy= 25;
         uint public minimum_Apy= 3;
         uint public penality = 10; 
         uint public minimum_investment=100*10**18;
         uint public maximum_investment=100000*10**18;
         uint public minimum_withdraw_reward_limit=10;
-    
+        uint public Unstake_request_time= 14 days;
         uint public total_reward_to_distribute = 100*10**18;
 
 
@@ -135,9 +135,9 @@ contract Staking
                 // depTime=depTime/Apy_Timeframe; //1 day
                 // if(depTime>0)
                 // {
-                    for(uint j=0;j < 400;j++)
+                    for(uint j=0;j < 365;j++)
                     {
-                        rew =  rew + ((((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) )/400);
+                        rew =  rew + ((((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) )/365);
                     }
 
 
@@ -178,9 +178,9 @@ contract Staking
                 // depTime=depTime/Apy_Timeframe; //1 day
                 // if(depTime>0)
                 // {
-                    for(uint j=0;j < 400;j++)
+                    for(uint j=0;j < 365;j++)
                     {
-                        rew =  rew + ( (((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) )/400);
+                        rew =  rew + ( (((rew + totalbusiness) * (Apy *10**18) )/ (100*10**18) )/365);
                     }
 
 
@@ -196,6 +196,11 @@ contract Staking
                        if(cal_apy>Apy)
                        {
                            cal_apy=Apy;
+                       }
+                       if(cal_apy<3)
+                       {
+                           cal_apy=minimum_Apy;
+
                        }
                     }
 
@@ -242,7 +247,7 @@ contract Staking
                     {
                         for(uint j=0;j<depTime;j++)
                         {
-                            rew =  rew+ ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/400);
+                            rew =  rew+ ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/365);
 
                         }
                         totalReward += rew;
@@ -251,7 +256,7 @@ contract Staking
                     else
                     {
                             
-                        rew =   (((user[msg.sender].investment[i].investedAmount * (Apy *10**18) )/ (100*10**18) )/400);
+                        rew =   (((user[msg.sender].investment[i].investedAmount * (Apy *10**18) )/ (100*10**18) )/365);
                         totalReward += depTime * rew;
 
                     }
@@ -294,7 +299,7 @@ contract Staking
                     {
                         for(uint j=0;j<depTime;j++)
                         {
-                            rew = rew+   ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/400);
+                            rew = rew+   ((((rew + user[msg.sender].investment[i].investedAmount) * (cal_apy *10**18) )/ (100*10**18) )/365);
 
                         }
                         totalReward += rew;
@@ -303,7 +308,7 @@ contract Staking
                     else
                     {
                             
-                        rew =   (((user[msg.sender].investment[i].investedAmount * (Apy *10**18) )/ (100*10**18) )/400);
+                        rew =   (((user[msg.sender].investment[i].investedAmount * (Apy *10**18) )/ (100*10**18) )/365);
                         totalReward += depTime * rew;
 
                     }
@@ -369,7 +374,7 @@ contract Staking
             uint amount=user[msg.sender].investment[num].investedAmount;
             user[msg.sender].investment[num].unstake_req =true;    
             user[msg.sender].investment[num].unstake_req_time =block.timestamp;    
-            user[msg.sender].investment[num].unstake_reqEnd_time =block.timestamp + 14 days;    
+            user[msg.sender].investment[num].unstake_reqEnd_time =block.timestamp + Unstake_request_time;    
 
             return true;
 
@@ -521,6 +526,16 @@ contract Staking
         function update_distributed_reward(uint _value)  public
         {
             total_reward_to_distribute = _value;
+        }
+
+        function update_Unstake_request_time(uint _value)  public
+        {
+            Unstake_request_time = _value;
+        }
+        
+        function update_APY(uint _value)  public
+        {
+            Apy = _value;
         }
 
     } 
