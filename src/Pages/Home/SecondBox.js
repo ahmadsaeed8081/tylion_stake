@@ -76,6 +76,7 @@ const SecondBox = ({
   const [stakeAmount, setStakedAmount] = useState(0);
   const [apy, set_apy] = useState("");
   const [minimum_investment, set_min_inv] = useState("");
+  const [minimum_withdraw, set_min_withdraw] = useState("");
 
   const [maximum_investment, set_max_inv] = useState("");
 
@@ -105,7 +106,7 @@ const SecondBox = ({
     address: stake2_address,
     abi: stake2_3_abi,
     functionName: "Stake",
-    args: [stakeAmount * 10 ** 18, toggleOn],
+    args: [stakeAmount * 10 ** 9, toggleOn],
     onSuccess(data) {
       test();
       console.log("Success", data);
@@ -116,7 +117,7 @@ const SecondBox = ({
     address: Stake2_token_Address,
     abi: token_abi,
     functionName: "approve",
-    args: [stake2_address, stakeAmount * 10 ** 18],
+    args: [stake2_address, stakeAmount * 10 ** 9],
   });
 
   const { config: unstakeConfig } = usePrepareContractWrite({
@@ -327,9 +328,12 @@ const SecondBox = ({
     let apy = await contract.methods.get_apy().call();
     let minimum_investment = await contract.methods.minimum_investment().call();
     let maximum_investment = await contract.methods.maximum_investment().call();
-set_max_inv(Convert_To_eth(maximum_investment))
-set_min_inv(Convert_To_eth(minimum_investment))
-    set_apy(apy);
+    let minimum_withdraw = await contract.methods.minimum_withdraw_reward_limit().call();
+    set_min_withdraw(minimum_withdraw)
+
+    set_max_inv(Convert_To_eth(maximum_investment))
+    set_min_inv(Convert_To_eth(minimum_investment))
+    set_apy(Convert_To_eth(apy));
     set_currTime(curr_time);
 
     let totalReward = await contract.methods
@@ -370,7 +374,7 @@ console.log(" object rew "+All_investments_ForReward);
       return;
     }
     let fee = (stakeAmount * 0.3) / 100;
-    fee = fee * 10 ** 18;
+    fee = fee * 10 ** 9;
 
     if (Number(data[8].result) < Number(fee)) {
       alert("You dont have enough balance");
@@ -442,11 +446,11 @@ console.log(" object rew "+All_investments_ForReward);
       return;
     }
     console.log("object withdraw " + choosed_Unstake_inv);
-    // if(stakeAmount==0 )
-    // {
-    //   alert("kindly write amount to stake ");
-    //   return;
-    // }
+    if(minimum_withdraw>totalReward )
+    {
+      alert("you cant withdraw less than "+minimum_withdraw/10**9);
+      return;
+    }
 
     // if(Number(data[10].result) < Number(fee))
     // {
@@ -577,7 +581,7 @@ console.log(" object rew "+All_investments_ForReward);
                   <div className="field-hdr flex items-center justify-between">
                     <h1 className="f-tag">Amount: (Min {minimum_investment} - Max {maximum_investment})</h1>
                     <h1 className="f-tag">
-                      Balance: <span className="font-semibold">{  data ? (Number(data[8].result) / 10 ** 18) : "0" }</span>
+                      Balance: <span className="font-semibold">{  data ? (Number(data[8].result) / 10 ** 9) : "0" }</span>
                     </h1>
                   </div>
                   <div className="field-i-box flex items-center">
@@ -667,7 +671,7 @@ console.log(" object rew "+All_investments_ForReward);
                               placeholder="Plano"
                             >
                               {selectedAmount
-                                ? selectedAmount[0] / 10 ** 18 
+                                ? selectedAmount[0] / 10 ** 9 
                                 : "0"} TYONs
                             </span>
                           </div>
@@ -694,7 +698,7 @@ console.log(" object rew "+All_investments_ForReward);
                           >
                             <div className="unit-name flex aic font w-full s14 b4 justify-between">
                               <span className="unit-eng flex aic font s14 b4">
-                                {Number(item[0]) / 10 ** 18} TYONs
+                                {Number(item[0]) / 10 ** 9} TYONs
                               </span>
                               <span className="unit-eng flex aic font s14 b4">
                                 {find_date(Number(item[2]))}
@@ -778,13 +782,13 @@ console.log(" object rew "+All_investments_ForReward);
                 <div className="info-item flex items-center justify-between">
                   <h1 className="item-lbl text-white">Total Earnings ($TYONs)</h1>
                   <h1 className="item-lbl text-white">
-                    {(Number(Total_withdraw) + Number(totalReward)) / 10 ** 18}
+                    {(Number(Total_withdraw) + Number(totalReward)) / 10 ** 9}
                   </h1>
                 </div>
                 <div className="info-item flex items-center justify-between">
                   <h1 className="item-lbl text-white">Available to Claim:</h1>
                   <h1 className="item-lbl text-white">
-                    {Number(totalReward) / 10 ** 18}
+                    {Number(totalReward) / 10 ** 9}
                   </h1>
                 </div>
               </div>
@@ -809,7 +813,7 @@ console.log(" object rew "+All_investments_ForReward);
                               placeholder="Plano"
                             >
                               {selectedAmount_forReward
-                                ? selectedAmount_forReward[0] / 10 ** 18
+                                ? selectedAmount_forReward[0] / 10 ** 9
                                 : "0"} TYONs
                             </span>
                           </div>
@@ -835,7 +839,7 @@ console.log(" object rew "+All_investments_ForReward);
                           >
                             <div className="unit-name flex aic font w-full s14 b4 justify-between">
                               <span className="unit-eng flex aic font s14 b4">
-                                {Number(item[0]) / 10 ** 18} TYONs
+                                {Number(item[0]) / 10 ** 9} TYONs
                               </span>
                               <span className="unit-eng flex aic font s14 b4">
                                 {find_date(Number(item[2]))}
